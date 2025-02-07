@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navbar Shopee</title>
+    <!-- Link Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
+
+        /* Navbar Top Section */
+        .navbar-top {
+            background-color: #ff5722; /* Màu nền cam */
+            color: white;
+            padding: 10px 0;
+            font-size: 14px;
+        }
+
+        .navbar-top .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar-top a {
+            color: white;
+            text-decoration: none;
+            margin-right: 15px;
+        }
+
+        .navbar-top a:hover {
+            text-decoration: underline;
+        }
+
+        /* Main Navbar Section */
+        .navbar-main {
+            background-color: #ff5722; /* Màu nền cam */
+            padding: 15px 0;
+
+        }
+
+        .navbar-main .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar-main .logo img {
+            height: 40px;
+        }
+
+        .navbar-main .search-bar {
+            flex: 1;
+            margin: 0 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-main .search-bar input {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 5px 0 0 5px;
+            font-size: 14px;
+        }
+
+        .navbar-main .search-bar button {
+            padding: 10px 20px;
+            background-color: white;
+            color: #ff5722;
+            border: none;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+        }
+
+        .navbar-main .cart-icon {
+            display: flex;
+            align-items: center;
+            color: white;
+            font-size: 18px;
+        }
+
+        .navbar-main .cart-icon .cart-count {
+            background-color: white;
+            color: #ff5722;
+            border-radius: 50%;
+            padding: 5px 10px;
+            font-size: 14px;
+            margin-left: 5px;
+        }
+
+        /* Submenu Below Search Bar */
+
+        .navbar-submenu a {
+            color: white;
+            text-decoration: none;
+            margin-right: 15px;
+        }
+
+        .navbar-submenu a:hover {
+            text-decoration: underline;
+        }
+
+        .search-bar form {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex: 1;
+        }
+
+        .search-bar input {
+            flex: 1;
+            padding: 8px;
+        }
+
+        .search-bar button {
+            padding: 8px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .search-bar button:hover {
+            background-color: #0056b3;
+        }
+
+        <!--
+        .navbar a, .navbar .dropdown {
+            text-decoration: none;
+            color: white; /* Màu chữ */
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .auth-links {
+            margin-left: auto; /* Đẩy mục đăng nhập/đăng ký hoặc dropdown ra cuối */
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%; /* Hiển thị dropdown ngay dưới nút */
+            right: 0;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            display: none; /* Ẩn menu thả xuống mặc định */
+        }
+
+        .dropdown:hover .dropdown-menu {
+            display: block; /* Hiển thị menu khi hover */
+        }
+
+        .dropdown-menu a {
+            color: #333; /* Màu chữ của menu */
+            padding: 10px;
+            display: block;
+            text-decoration: none;
+        }
+
+        .dropdown-menu a:hover {
+            background-color: #f5f5f5;
+        }
+
+
+        .banner-section {
+            background-color: #ffffff;
+            padding: 20px 0;
+        }
+
+        .banner-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .banner-container img {
+            width: 100%;
+            max-width: 33%; /* Ba cột ngang chia đều */
+            border-radius: 5px;
+        }
+
+        /* Voucher Section */
+        .voucher-section {
+            margin-top: 20px;
+            text-align: center;
+
+        }
+
+        .voucher-item {
+            display: inline-block;
+            width: 120px;
+            margin: 10px;
+            text-align: center;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .voucher-item img {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 10px;
+        }
+
+        .voucher-item span {
+            display: block;
+            margin-top: 5px;
+        }
+
+
+
+        .pagination a {
+            text-decoration: none;
+            padding: 8px 12px;
+            margin: 0 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .product-card {
+            border: 1px solid #eaeaea;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .product-card .card-title {
+            font-size: 14px;
+            font-weight: bold;
+            line-height: 1.2;
+            height: 40px; /* Đảm bảo chiều cao cố định */
+            overflow: hidden; /* Giới hạn text */
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .product-card .card-text {
+            font-size: 14px;
+        }
+
+        .product-card .card-footer {
+            background-color: #f9f9f9;
+            text-align: center;
+        }
+
+        .category-item img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+
+        .category-item p {
+            font-size: 14px;
+            margin: 0;
+            font-weight: bold;
+        }
+
+
+    </style>
+</head>
+<body>
+<div class="navbar-top">
+    <div class="container">
+        <div>
+            <a href="#">Kênh Người Bán</a>
+            <a href="#">Tải ứng dụng</a>
+            <span>Kết nối:</span>
+            <a href="#"><i class="bi bi-facebook"></i></a>
+            <a href="#"><i class="bi bi-instagram"></i></a>
+        </div>
+        <div class="navbar">
+            <a href="#">Thông Báo</a>
+            <a href="#">Hỗ Trợ</a>
+            <a href="#">Tiếng Việt</a>
+
+            <span class="auth-links" th:unless="${user}">
+            <a th:href="@{/register}" id="register">Đăng Ký</a> |
+            <a th:href="@{/login}" id="login">Đăng Nhập</a>
+        </span>
+            <div class="dropdown auth-links" th:if="${user}">
+                <a href="#" class="dropdown-toggle" id="userDropdown" role="button" data-bs-toggle="dropdown"
+                   aria-expanded="false" th:text="${user.getFullName}">
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="userDropdown">
+                    <li><a class="dropdown-item text-dark" th:href="@{/customer/profile}">Tài Khoản Của Tôi</a></li>
+                    <li><a class="dropdown-item text-dark" th:href="@{/customer/orders}">Đơn Mua</a></li>
+                    <li><a class="dropdown-item text-danger" th:href="@{/logout}">Đăng Xuất</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Main Navbar -->
+<div class="navbar-main">
+    <div class="container">
+        <div class="logo">
+            <a th:href="@{/}"> <img src="shopee-logo.png" alt="Shopee Logo"></a>
+        </div>
+        <div class="search-bar">
+            <form th:action="@{/search}" method="GET">
+                <input type="text"
+                       name="keyword"
+                       placeholder="Tìm sản phẩm, thương hiệu và tên shop"
+                       th:value="${keyword}"
+                       required>
+                <button type="submit">🔍</button>
+            </form>
+        </div>
+        <div class="cart-icon">
+            <a th:href="@{/customer/cart}">
+                🛒
+            </a>
+            <div class="cart-count"></div>
+        </div>
+    </div>
+</div>
+
+<!-- Banner Section -->
+<div class="banner-section">
+    <div class="container" style="padding:10px 10px;">
+        <div class="banner-container">
+            <img src="https://cf.shopee.vn/file/vn-11134258-7ras8-m2kj655hr3qy09_xxhdpi" alt="Banner 1">
+            <img src="https://cf.shopee.vn/file/vn-11134258-7ras8-m2kuu5oqoj3u1f_xhdpi" alt="Banner 2">
+            <img src="https://cf.shopee.vn/file/vn-11134258-7ras8-m2kp3wniqz2ed7_xhdpi" alt="Banner 3">
+        </div>
+    </div>
+</div>
+
+<!-- Voucher Section -->
+<div class="voucher-section">
+    <div class="container" style="background-color:#ffffff;">
+        <div class="voucher-item">
+            <img src="voucher1.png" alt="Voucher 1">
+            <span>Voucher Giảm Đến 1 Triệu</span>
+        </div>
+        <div class="voucher-item">
+            <img src="voucher2.png" alt="Voucher 2">
+            <span>Miễn Phí Ship - Có Shopee</span>
+        </div>
+        <div class="voucher-item">
+            <img src="voucher3.png" alt="Voucher 3">
+            <span>Mua Nhiều Giảm Sâu</span>
+        </div>
+        <div class="voucher-item">
+            <img src="voucher4.png" alt="Voucher 4">
+            <span>Shopee Style Voucher 30%</span>
+        </div>
+        <div class="voucher-item">
+            <img src="voucher5.png" alt="Voucher 5">
+            <span>Hàng Quốc Tế Ưu Đãi</span>
+        </div>
+        <div class="voucher-item">
+            <img src="voucher6.png" alt="Voucher 6">
+            <span>Nạp Thẻ, Dịch Vụ & Vé Phim</span>
+        </div>
+    </div>
+</div>
+
+<div class="container my-5" style="background-color:#ffffff">
+    <!-- Tiêu đề danh mục -->
+    <h2 class="mb-4 text-uppercase font-weight-bold">DANH MỤC</h2>
+
+    <!-- Bắt đầu lưới danh mục -->
+    <div class="row text-center">
+        <!-- Lặp qua danh sách categories -->
+        <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-4" th:each="category : ${categories}">
+            <div class="category-card d-flex flex-column align-items-center">
+                <!-- Hình ảnh danh mục -->
+                <div class="category-icon" style="
+                    width: 80px;
+                    height: 80px;
+                    border-radius: 50%;
+                    overflow: hidden;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    background-color: #f8f8f8;">
+                    <img th:src="@{${category.image}}" th:alt="${category.categoryName}"
+                         style="max-width: 100%; height: auto; object-fit: contain;">
+                </div>
+
+                <!-- Tên danh mục -->
+                <a th:href="@{/categories/{id}(id=${category.categoryId})}"
+                   th:text="${category.categoryName}"
+                   style="margin-top: 10px;
+                          font-size: 14px;
+                          font-weight: 500;
+                          color: #333;
+                          text-decoration: none;">
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container mt-4">
+    <h2 class="mb-4" th:if="${categoryname}" th:text="'DANH MỤC THEO  '+${categoryname}">DANH MỤC</h2>
+    <p style="font-size: 18px; color: #ff5722; text-align: center; margin-top: 20px;" th:if="${none}">Không tìm thấy sản
+        phẩm nào</p>
+    <div class="row">
+        <!-- Lặp qua danh sách sản phẩm -->
+        <div class="col-6 col-md-4 col-lg-3 mb-4" th:each="product : ${products}">
+            <div class="card product-card">
+                <img th:src="${product.image}" class="card-img-top" alt="product-image">
+                <div class="card-body">
+                    <h6 class="card-title" th:text="${product.productName}"></h6>
+                    <p class="card-text text-danger price" th:text="${product.price} + '₫'"></p>
+                </div>
+                <div class="card-footer">
+                    <a th:href="@{/products/{id}(id=${product.productID})}">
+                        <button class="btn btn-sm btn-primary">Mua ngay</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                document.querySelectorAll(".price").forEach(priceElement => {
+                    // Lấy giá trị thô từ nội dung của thẻ
+                    let rawPrice = parseInt(priceElement.textContent.replace('₫', '').trim());
+                    // Định dạng giá theo kiểu vi-VN
+                    priceElement.textContent = `${rawPrice.toLocaleString('vi-VN')}₫`;
+                });
+            });
+        </script>
+    </div>
+</div>
+
+<!-- Link Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

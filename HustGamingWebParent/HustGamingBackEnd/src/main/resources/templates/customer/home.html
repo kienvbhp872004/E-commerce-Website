@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Trang chủ mua sắm trực tuyến">
+    <title>Trang chủ khách hàng</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #0066cc;
+            --primary-light: #4da6ff;
+            --text-light: #ffffff;
+            --hover-color: #cccccc;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            background: linear-gradient(to bottom, var(--primary-light), var(--primary-color));
+            padding: 20px 30px;
+            color: var(--text-light);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .header .btn {
+            background: transparent;
+            color: var(--text-light);
+            border: none;
+            margin-left: 15px;
+            transition: color 0.3s ease;
+            padding: 8px 16px;
+        }
+
+        .header .btn:hover {
+            color: var(--hover-color);
+            text-decoration: none;
+        }
+
+        .search-bar {
+            margin: 15px auto;
+            max-width: 600px;
+        }
+
+        .search-bar .input-group {
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-bar input {
+            border: none;
+            padding: 12px 20px;
+        }
+
+        .search-bar .input-group-append .btn {
+            background: var(--primary-color);
+            color: var(--text-light);
+            padding: 0 20px;
+            border: none;
+        }
+
+        .search-bar .input-group-append .btn:hover {
+            background: var(--primary-light);
+        }
+
+        .cart-icon {
+            cursor: pointer;
+            color: var(--text-light);
+            margin-left: 15px;
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .cart-icon:hover {
+            transform: scale(1.1);
+        }
+
+        .product-grid {
+            padding: 20px 0;
+        }
+
+        .card {
+            margin-bottom: 20px;
+            border: none;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-img-top {
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .card-body {
+            padding: 15px;
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+
+        .card-text {
+            color: #666;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.5rem;
+            }
+
+            .search-bar {
+                width: 90%;
+            }
+
+            .col-3 {
+                flex: 0 0 50%;
+                max-width: 50%;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .col-3 {
+                flex: 0 0 100%;
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="header">
+    <div class="d-flex justify-content-between align-items-center">
+        <h1>Trang chủ khách hàng</h1>
+        <div class="d-flex align-items-center">
+            <i class="fas fa-shopping-cart cart-icon" onclick="location.href='/customer/cart/'" title="Giỏ hàng"></i>
+            <button class="btn" title="Xem hồ sơ">
+                <i class="fas fa-user"></i>
+                <span class="d-none d-md-inline ml-2">Hồ sơ</span>
+            </button>
+            <a th:href="@{/logout}" class="btn" title="Đăng xuất">
+                <i class="fas fa-sign-out-alt"></i>
+                <span class="d-none d-md-inline ml-2">Đăng xuất</span>
+            </a>
+        </div>
+    </div>
+    <div class="search-bar">
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Tìm kiếm sản phẩm..." aria-label="Tìm kiếm">
+            <div class="input-group-append">
+                <button class="btn" type="button" title="Tìm kiếm">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-4">
+    <h2 class="mb-4">Danh sách sản phẩm</h2>
+    <div class="row product-grid">
+        <div class="col-3" th:each="product : ${products}">
+            <div class="card">
+                <img th:src="@{'/image/' + ${product.productID}}" class="card-img-top" th:alt="${product.productName}">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${product.productName}"></h5>
+                    <p class="card-text">
+                        <span th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT')}"></span> VND
+                    </p>
+                    <button class="btn btn-primary btn-block">
+                        <i class="fas fa-cart-plus mr-2"></i>Thêm vào giỏ
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Navbar Shopee</title>
+  <!-- Link Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        background-color: #f5f5f5;
+    }
+
+    /* Navbar Top Section */
+    .navbar-top {
+        background-color: #ff5722; /* Màu nền cam */
+        color: white;
+        padding: 10px 0;
+        font-size: 14px;
+    }
+
+    .navbar-top .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .navbar-top a {
+        color: white;
+        text-decoration: none;
+        margin-right: 15px;
+    }
+
+    .navbar-top a:hover {
+        text-decoration: underline;
+    }
+
+    /* Main Navbar Section */
+    .navbar-main {
+        background-color: #ff5722; /* Màu nền cam */
+        padding: 15px 0;
+
+    }
+
+    .navbar-main .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .navbar-main .logo img {
+        height: 40px;
+    }
+
+    .navbar-main .search-bar {
+        flex: 1;
+        margin: 0 20px;
+        display: flex;
+        align-items: center;
+    }
+
+    .navbar-main .search-bar input {
+        flex: 1;
+        padding: 10px;
+        border: none;
+        border-radius: 5px 0 0 5px;
+        font-size: 14px;
+    }
+
+    .navbar-main .search-bar button {
+        padding: 10px 20px;
+        background-color: white;
+        color: #ff5722;
+        border: none;
+        border-radius: 0 5px 5px 0;
+        cursor: pointer;
+    }
+
+    .navbar-main .cart-icon {
+        display: flex;
+        align-items: center;
+        color: white;
+        font-size: 18px;
+    }
+
+    .navbar-main .cart-icon .cart-count {
+        background-color: white;
+        color: #ff5722;
+        border-radius: 50%;
+        padding: 5px 10px;
+        font-size: 14px;
+        margin-left: 5px;
+    }
+
+    /* Submenu Below Search Bar */
+
+    .navbar-submenu a {
+        color: white;
+        text-decoration: none;
+        margin-right: 15px;
+    }
+
+    .navbar-submenu a:hover {
+        text-decoration: underline;
+    }
+
+    .search-bar form {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex: 1;
+    }
+
+    .search-bar input {
+        flex: 1;
+        padding: 8px;
+    }
+
+    .search-bar button {
+        padding: 8px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+
+    .search-bar button:hover {
+        background-color: #0056b3;
+    }
+
+
+    <!--
+    .navbar a, .navbar .dropdown {
+        text-decoration: none;
+        color: white; /* Màu chữ */
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+    .auth-links {
+        margin-left: auto; /* Đẩy mục đăng nhập/đăng ký hoặc dropdown ra cuối */
+    }
+
+    .dropdown-menu {
+        position: absolute;
+        top: 100%; /* Hiển thị dropdown ngay dưới nút */
+        right: 0;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        display: none; /* Ẩn menu thả xuống mặc định */
+    }
+
+    .dropdown:hover .dropdown-menu {
+        display: block; /* Hiển thị menu khi hover */
+    }
+
+    .dropdown-menu a {
+        color: #333; /* Màu chữ của menu */
+        padding: 10px;
+        display: block;
+        text-decoration: none;
+    }
+
+    .dropdown-menu a:hover {
+        background-color: #f5f5f5;
+    }
+
+    .pagination a {
+        text-decoration: none;
+        padding: 8px 12px;
+        margin: 0 5px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+
+    .product-card {
+        border: 1px solid #eaeaea;
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .product-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .product-card .card-title {
+        font-size: 14px;
+        font-weight: bold;
+        line-height: 1.2;
+        height: 40px; /* Đảm bảo chiều cao cố định */
+        overflow: hidden; /* Giới hạn text */
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .product-card .card-text {
+        font-size: 14px;
+    }
+
+    .product-card .card-footer {
+        background-color: #f9f9f9;
+        text-align: center;
+    }
+
+    .category-item img {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        margin-bottom: 10px;
+    }
+
+    .category-item p {
+        font-size: 14px;
+        margin: 0;
+        font-weight: bold;
+    }
+
+    /* Icon mũi tên */
+    .btn-slide span {
+        font-size: 18px;
+        font-weight: bold;
+        color: #333;
+    }
+
+    .search-result {
+        font-size: 16px;
+        color: #333;
+    }
+
+    .search-keyword {
+        color: #ee4d2d;
+        font-weight: 500;
+    }
+
+    .main-container {
+        display: flex;
+        padding: 20px;
+        gap: 20px;
+        background-color: #f5f5f5;
+    }
+
+    .left-column {
+        width: 250px;
+        flex-shrink: 0;
+    }
+
+    .right-column {
+        flex: 1;
+    }
+
+    .filter-section {
+        background-color: white;
+        padding: 15px;
+        border-radius: 4px;
+        margin-bottom: 20px;
+    }
+
+    .sort-section {
+        background-color: white;
+        padding: 15px;
+        border-radius: 4px;
+    }
+
+    .sort-options {
+        list-style: none;
+        padding: 0;
+    }
+
+    .sort-options li {
+        margin-bottom: 10px;
+    }
+
+    .sort-options a {
+        text-decoration: none;
+        color: #333;
+        display: block;
+        padding: 8px;
+        border-radius: 4px;
+    }
+
+    .sort-options li.active a {
+        background-color: #ff5722;
+        color: white;
+    }
+
+    .price-inputs .form-group {
+        margin-bottom: 10px;
+    }
+
+    .search-result {
+        background-color: white;
+        padding: 15px;
+        border-radius: 4px;
+        margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+<div class="navbar-top">
+  <div class="container">
+    <div>
+      <a href="#">Kênh Người Bán</a>
+      <a href="#">Tải ứng dụng</a>
+      <span>Kết nối:</span>
+      <a href="#"><i class="bi bi-facebook"></i></a>
+      <a href="#"><i class="bi bi-instagram"></i></a>
+    </div>
+    <div class="navbar">
+      <a href="#">Thông Báo</a>
+      <a href="#">Hỗ Trợ</a>
+      <a href="#">Tiếng Việt</a>
+
+      <span class="auth-links" th:unless="${user}">
+            <a th:href="@{/register}" id="register">Đăng Ký</a> |
+            <a th:href="@{/login}" id="login">Đăng Nhập</a>
+        </span>
+      <div class="dropdown auth-links" th:if="${user}">
+        <a href="#" class="dropdown-toggle" id="userDropdown" role="button" data-bs-toggle="dropdown"
+           aria-expanded="false" th:text="${user.getFullName}">
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="userDropdown">
+          <li><a class="dropdown-item text-dark" th:href="@{/customer/profile}">Tài Khoản Của Tôi</a></li>
+          <li><a class="dropdown-item text-dark" th:href="@{/customer/orders}">Đơn Mua</a></li>
+          <li><a class="dropdown-item text-danger" th:href="@{/logout}">Đăng Xuất</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Control Navbar -->
+<div class="navbar-main">
+  <div class="container">
+    <div class="logo">
+      <a th:href="@{/}"> <img src="shopee-logo.png" alt="Shopee Logo"></a>
+    </div>
+    <div class="search-bar">
+      <form th:action="@{/search}" method="GET">
+        <input type="text"
+               name="keyword"
+               placeholder="Tìm sản phẩm, thương hiệu và tên shop"
+               th:value="${keyword}"
+               required>
+        <button type="submit">🔍</button>
+      </form>
+    </div>
+    <div class="cart-icon">
+      <a th:href="@{/customer/cart}">
+        🛒
+      </a>
+      <div class="cart-count"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Main Navbar -->
+<div class="main-container mt-3">
+  <!-- Left Column -->
+  <div class="left-column">
+    <!-- Filter Section -->
+    <div class="filter-section">
+      <h4>Lọc theo giá</h4>
+      <form th:action="@{/search}" method="GET">
+        <input type="hidden" name="keyword" th:value="${keyword}"/>
+        <input type="hidden" name="sortBy" th:value="${sortBy}"/>
+        <div class="price-inputs">
+          <div class="form-group">
+            <label>Giá từ:</label>
+            <input type="number" class="form-control" name="minPrice" placeholder="Giá thấp nhất"
+                   th:value="${minPrice}" min="0" max="2147483647">
+          </div>
+          <div class="form-group">
+            <label>Đến:</label>
+            <input type="number" class="form-control" name="maxPrice" placeholder="Giá cao nhất"
+                   th:value="${maxPrice}" min="0" max="2147483647">
+          </div>
+          <button type="submit" class="btn btn-primary mt-2">Áp dụng</button>
+        </div>
+      </form>
+
+    </div>
+
+    <!-- Sort Section -->
+    <div class="sort-section">
+      <h4>Sắp xếp theo</h4>
+      <ul class="sort-options">
+        <li th:class="${sortBy == 'popularity' || sortBy == null ? 'active' : ''}">
+          <a th:href="@{/search(keyword=${keyword},sortBy='popularity',minPrice=${minPrice},maxPrice=${maxPrice})}">
+            Độ phổ biến</a>
+        </li>
+        <li th:class="${sortBy == 'date' ? 'active' : ''}">
+          <a th:href="@{/search(keyword=${keyword},sortBy='date',minPrice=${minPrice},maxPrice=${maxPrice})}">
+            Mới nhất</a>
+        </li>
+        <li th:class="${sortBy == 'priceASC' ? 'active' : ''}">
+          <a th:href="@{/search(keyword=${keyword},sortBy='priceASC',minPrice=${minPrice},maxPrice=${maxPrice})}">
+            Giá tăng dần</a>
+        </li>
+        <li th:class="${sortBy == 'priceDESC' ? 'active' : ''}">
+          <a th:href="@{/search(keyword=${keyword},sortBy='priceDESC',minPrice=${minPrice},maxPrice=${maxPrice})}">
+            Giá giảm dần</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Right Column -->
+  <div class="right-column">
+    <!-- Search Result Section -->
+    <div class="search-result">
+      <h5>
+        Kết quả tìm kiếm cho từ khoá '<span class="search-keyword" th:text="${keyword}"></span>'
+      </h5>
+    </div>
+
+    <!-- Product Section -->
+    <div class="row">
+      <div class="col-6 col-md-4 col-lg-3 mb-4" th:each="product : ${products}">
+        <div class="card product-card">
+          <img th:src="@{${product.image}}" class="card-img-top" alt="product-image">
+          <div class="card-body">
+            <h6 class="card-title" th:text="${product.productName}"></h6>
+            <p class="card-text text-danger price" th:text="${product.price} + '₫'"></p>
+          </div>
+          <div class="card-footer">
+            <a th:href="@{/products/{id}(id=${product.productID})}">
+              <button class="btn btn-sm btn-primary">Mua ngay</button>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+          document.querySelectorAll(".price").forEach(priceElement => {
+              // Lấy giá trị thô từ nội dung của thẻ
+              let rawPrice = parseInt(priceElement.textContent.replace('₫', '').trim());
+              // Định dạng giá theo kiểu vi-VN
+              priceElement.textContent = `${rawPrice.toLocaleString('vi-VN')}₫`;
+          });
+      });
+    </script>
+  </div>
+</div>
+
+<!-- Page Navbar -->
+<div class="container mt-4" th:if="${totalPages > 1}">
+  <div class="pagination">
+    <ul class="pagination">
+      <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled'">
+        <a class="page-link"
+           th:href="@{/search(keyword=${keyword}, page=${currentPage - 1}, sortBy=${sortBy}, minPrice=${minPrice}, maxPrice=${maxPrice})}"
+           tabindex="-1">Trang trước</a>
+      </li>
+      <li class="page-item"
+          th:each="pageNumber : ${#numbers.sequence(1, products.totalPages)}"
+          th:classappend="${pageNumber == currentPage} ? 'active'">
+        <a class="page-link"
+           th:href="@{/search(keyword=${keyword}, page=${pageNumber}, sortBy=${sortBy}, minPrice=${minPrice}, maxPrice=${maxPrice})}"
+           th:text="${pageNumber}"></a>
+      </li>
+      <li class="page-item" th:classappend="${currentPage == products.totalPages} ? 'disabled'">
+        <a class="page-link"
+           th:href="@{/search(keyword=${keyword}, page=${currentPage + 1}, sortBy=${sortBy}, minPrice=${minPrice}, maxPrice=${maxPrice})}">
+          Trang sau</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<!-- Link Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

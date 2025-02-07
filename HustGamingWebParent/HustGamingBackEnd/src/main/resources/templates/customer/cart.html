@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Shopping Cart">
+    <title>Shopping Cart</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        :root {
+          --primary-color: #0066cc;
+          --primary-light: #4da6ff;
+          --text-light: #ffffff;
+          --hover-color: #cccccc;
+        }
+
+        body {
+          margin: 0;
+          padding: 0;
+          min-height: 100vh;
+          display: flex;
+          flex-direction: column;
+        }
+
+        .header {
+          background: linear-gradient(to bottom, var(--primary-light), var(--primary-color));
+          padding: 20px 30px;
+          color: var(--text-light);
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .header .btn {
+          background: transparent;
+          color: var(--text-light);
+          border: none;
+          margin-left: 15px;
+          transition: color 0.3s ease;
+          padding: 8px 16px;
+        }
+
+        .header .btn:hover {
+          color: var(--hover-color);
+          text-decoration: none;
+        }
+
+        .cart-items {
+          padding: 20px 0;
+        }
+
+        .cart-item {
+          display: flex;
+          align-items: center;
+          border-bottom: 1px solid #eee;
+          padding: 15px 0;
+        }
+
+        .cart-item-image {
+          width: 80px;
+          height: 80px;
+          object-fit: cover;
+          border-radius: 4px;
+          margin-right: 15px;
+        }
+
+        .cart-item-details {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          flex-grow: 1;
+        }
+
+        .cart-item-name {
+          font-weight: bold;
+          margin-right: 15px;
+        }
+
+        .cart-item-price {
+          font-weight: bold;
+          color: var(--primary-color);
+          margin-right: 15px;
+        }
+
+        .cart-item-quantity {
+          display: flex;
+          align-items: center;
+        }
+
+        .cart-item-quantity button {
+          background-color: var(--primary-color);
+          color: var(--text-light);
+          border: none;
+          padding: 5px 10px;
+          border-radius: 4px;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
+        }
+
+        .cart-item-quantity button:hover {
+          background-color: var(--primary-light);
+        }
+
+        .cart-item-quantity input {
+          width: 50px;
+          text-align: center;
+          border: 1px solid #ccc;
+          padding: 5px;
+          border-radius: 4px;
+          margin: 0 10px;
+        }
+
+        .total-price {
+          text-align: right;
+          font-size: 1.2rem;
+          font-weight: bold;
+          margin-top: 20px;
+          color: var(--primary-color);
+        }
+
+        .checkout-btn {
+          display: block;
+          background-color: var(--primary-color);
+          color: var(--text-light);
+          border: none;
+          padding: 10px 20px;
+          border-radius: 4px;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
+          margin-top: 20px;
+        }
+
+        .checkout-btn:hover {
+          background-color: var(--primary-light);
+        }
+    </style>
+</head>
+<body>
+<div class="header">
+    <div class="d-flex justify-content-between align-items-center">
+        <h1>Shopping Cart</h1>
+        <div class="d-flex align-items-center">
+            <a th:href="@{/customer/}" class="btn" title="Back to Home">
+                <i class="fas fa-home"></i>
+                <span class="d-none d-md-inline ml-2">Home</span>
+            </a>
+            <a th:href="@{/logout}" class="btn" title="Logout">
+                <i class="fas fa-sign-out-alt"></i>
+                <span class="d-none d-md-inline ml-2">Logout</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-4 cart-items">
+    <h2 class="mb-4">Cart Items</h2>
+    <div th:each="item : ${cartItems}">
+        <div class="cart-item">
+            <img th:src="@{'/image/' + ${item.Product.productID}}" class="cart-item-image" th:alt="${item.product.productName}">
+            <div class="cart-item-details">
+                <div class="cart-item-name" th:text="${item.Product.productName}"></div>
+                <div class="cart-item-price" th:text="${#numbers.formatDecimal(item.product.price, 0, 'COMMA', 0, 'POINT')} + ' VND'"></div>
+                <div class="cart-item-quantity">
+                    <button>-</button>
+                    <input type="number" th:value="${item.CartItems.quantityID}" min="1" />
+                    <button>+</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="total-price">
+        <span>Total: </span>
+        <span th:text="${#numbers.formatDecimal(totalPrice, 0, 'COMMA', 0, 'POINT')}"></span> VND
+    </div>
+    <button class="checkout-btn">
+        <i class="fas fa-credit-card mr-2"></i>Checkout
+    </button>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

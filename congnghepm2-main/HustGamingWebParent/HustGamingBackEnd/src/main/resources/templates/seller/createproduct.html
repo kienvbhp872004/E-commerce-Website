@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .navbar-custom {
+                background-color: #1f1f3d; /* Màu tối cho navbar */
+            }
+            .navbar-custom .navbar-brand,
+            .navbar-custom .nav-link {
+                color: #fff;
+            }
+            .navbar-custom .nav-link:hover {
+                color: #ccc;
+            }
+            .navbar-custom .user-info {
+                color: #fff;
+                margin-right: 15px;
+            }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-custom">
+    <div class="container-fluid">
+        <a class="navbar-brand" th:href="@{/seller/}">Seller HOME</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/seller/shop}">Shop</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/seller/products}">Products</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/seller/orders}">Orders</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/seller/reviews}">Reviews</a>
+                </li>
+            </ul>
+            <span class="navbar-text user-info">
+                    <!-- Hiển thị tên người dùng và vai trò với Thymeleaf -->
+                    Welcome
+                </span>
+            <!-- Dropdown thông tin người dùng -->
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-person"></i> <span >Option</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                        <li><a class="dropdown-item" th:href="@{/seller/profile}">Profile</a></li>
+                        <li><a class="dropdown-item" th:href="@{/logout}">Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-5">
+    <h2 class="text-center"> thông tin san pham cua ban</h2>
+    <form th:action="@{/seller/products/create}" th:object="${product}" method="post" enctype="multipart/form-data" >
+
+        <div class="form-group">
+            <label for="productID">ID </label>
+            <input type="text" class="form-control" id="productID" th:field="*{productID}" placeholder="productID" disabled>
+        </div>
+
+        <div class="form-group">
+            <label for="productName">Name</label>
+            <input type="text" class="form-control" id="productName" th:field="*{productName}" placeholder="name">
+        </div>
+
+        <div class="form-group">
+            <label for="description">Description</label>
+            <input type="text" class="form-control" id="description" th:field="*{description}" placeholder="Description" >
+        </div>
+
+        <div class="form-group">
+            <label for="price">Price</label>
+            <input type="text" class="form-control" id="price" th:field="*{price}" placeholder="Price" >
+        </div>
+
+        <div class="form-group">
+            <label for="quantity">Quantity</label>
+            <input type="text" class="form-control" id="quantity" th:field="*{quantity}" placeholder="Quantity" >
+        </div>
+        <div class="form-group">
+            <label for="categoryID">Category</label>
+            <select name="categoryID" id="categoryID" class="form-control" th:field="*{categoryID}" required>
+                <option th:each="category : ${categories}"
+                        th:value="${category.categoryId}"
+                        th:text="${category.categoryName}">
+                </option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="shopID">ShopID</label>
+            <input type="text" class="form-control" id="shopID" th:field="*{shopID}" placeholder="shopID" disabled>
+        </div>
+        <div class="form-group">
+            <label for="status">Status</label>
+            <input type="text" class="form-control" id="status" th:field="*{status}" placeholder="Status" >
+        </div>
+        <!-- Input File để tải nhiều ảnh lên -->
+        <div class="form-group">
+            <label for="productImages">Product Images</label>
+            <input type="file" name="productImages" id="productImages" class="form-control" multiple required onchange="previewImages(event)">
+        </div>
+        <div id="imagePreview" style="display: flex; gap: 10px; margin-top: 10px;"></div>
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+    </form>
+    <script>
+        function previewImages(event) {
+            const files = event.target.files; // Lấy tất cả file ảnh
+            const imagePreview = document.getElementById("imagePreview");
+            imagePreview.innerHTML = ""; // Xóa tất cả hình ảnh cũ (nếu có)
+            // Sử dụng Array.from() để duyệt qua từng file
+            Array.from(files).forEach(file => {
+                // Kiểm tra nếu file là ảnh
+                if (file && file.type.startsWith("image/")) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        // Tạo một thẻ img để hiển thị ảnh
+                        const img = document.createElement("img");
+                        img.src = e.target.result;
+                        img.style.width = "100px";
+                        img.style.height = "100px";
+                        img.style.objectFit = "cover";
+                        img.style.borderRadius = "5px";
+                        img.style.boxShadow = "0px 0px 5px rgba(0, 0, 0, 0.2)";
+                        imagePreview.appendChild(img); // Thêm ảnh vào khu vực hiển thị
+                    };
+                    reader.readAsDataURL(file); // Đọc file ảnh dưới dạng URL
+                }
+            });
+        }
+    </script>
+</div>
+</body>
+</html>

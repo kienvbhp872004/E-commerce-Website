@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hồ Sơ Của Tôi</title>
+    <!-- Link Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
+               /* Navbar Top Section */
+         .navbar-top {
+             background-color: #ff5722; /* Màu nền cam */
+             color: white;
+             padding: 10px 0;
+             font-size: 14px;
+         }
+
+         .navbar-top .container {
+             display: flex;
+             justify-content: space-between;
+             align-items: center;
+         }
+         .navbar-top a {
+             color: white;
+             text-decoration: none;
+             margin-right: 15px;
+         }
+
+         .navbar-top a:hover {
+             text-decoration: underline;
+         }
+
+         /* Main Navbar Section */
+         .navbar-main {
+             background-color: #ff5722; /* Màu nền cam */
+             padding: 15px 0;
+
+         }
+
+         .navbar-main .container {
+             display: flex;
+             justify-content: space-between;
+             align-items: center;
+         }
+
+         .navbar-main .logo img {
+             height: 40px;
+         }
+
+         .navbar-main .search-bar {
+             flex: 1;
+             margin: 0 20px;
+             display: flex;
+             align-items: center;
+         }
+
+         .navbar-main .search-bar input {
+             flex: 1;
+             padding: 10px;
+             border: none;
+             border-radius: 5px 0 0 5px;
+             font-size: 14px;
+         }
+
+         .navbar-main .search-bar button {
+             padding: 10px 20px;
+             background-color: white;
+             color: #ff5722;
+             border: none;
+             border-radius: 0 5px 5px 0;
+             cursor: pointer;
+         }
+
+         .navbar-main .cart-icon {
+             display: flex;
+             align-items: center;
+             color: white;
+             font-size: 18px;
+         }
+
+         .navbar-main .cart-icon .cart-count {
+             background-color: white;
+             color: #ff5722;
+             border-radius: 50%;
+             padding: 5px 10px;
+             font-size: 14px;
+             margin-left: 5px;
+         }
+
+         /* Submenu Below Search Bar */
+         .navbar-submenu {
+             background-color: #ff814c;
+             padding: 5px 0;
+             font-size: 14px;
+         }
+
+         .navbar-submenu a {
+             color: white;
+             text-decoration: none;
+             margin-right: 15px;
+         }
+
+         .navbar-submenu a:hover {
+             text-decoration: underline;
+         }
+         <!--        test-->
+.navbar {
+            display: flex; /* Căn ngang */
+            justify-content: flex-end; /* Đẩy toàn bộ mục sang bên phải */
+            align-items: center; /* Căn giữa theo chiều dọc */
+            background-color: #ff6600; /* Màu nền */
+            padding: 10px 20px;
+            gap: 15px; /* Khoảng cách giữa các mục */
+        }
+
+        .navbar a, .navbar .dropdown {
+            text-decoration: none;
+            color: white; /* Màu chữ */
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .auth-links {
+            margin-left: auto; /* Đẩy mục đăng nhập/đăng ký hoặc dropdown ra cuối */
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%; /* Hiển thị dropdown ngay dưới nút */
+            right: 0;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            display: none; /* Ẩn menu thả xuống mặc định */
+        }
+
+        .dropdown:hover .dropdown-menu {
+            display: block; /* Hiển thị menu khi hover */
+        }
+
+        .dropdown-menu a {
+            color: #333; /* Màu chữ của menu */
+            padding: 10px;
+            display: block;
+            text-decoration: none;
+        }
+
+        .dropdown-menu a:hover {
+            background-color: #f5f5f5;
+        }
+<!--       test -->
+<!--         navbar-->
+        .address-select-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 20px;
+    }
+
+    .address-select {
+    flex: 1;
+    appearance: none;
+    background-color: #f8f9fa;
+    border: 1px solid #ced4da;
+    border-radius: 0.375rem;
+    padding: 0.625rem;
+    font-size: 1rem;
+    color: #495057;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M1 4l5 5 5-5z' fill='%23495057'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 8px 8px;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    }
+
+    .address-select:focus {
+    border-color: #ff5722;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(255, 87, 34, 0.25);
+    }
+
+
+        .profile-container {
+            max-width: 800px;
+            margin: 30px auto;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 30px;
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #eaeaea;
+            padding-bottom: 20px;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .profile-avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 20px;
+            border: 2px solid #ddd;
+        }
+
+        .btn-choose {
+            display: inline-block;
+            background-color: #ff5722;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-choose:hover {
+            background-color: #ff7043;
+        }
+
+        .profile-info {
+            text-align: center;
+        }
+        textarea.form-control {
+    appearance: none;
+    background-color: #f8f9fa;
+    border: 1px solid #ced4da;
+    border-radius: 0.375rem;
+    padding: 0.625rem;
+    font-size: 1rem;
+    color: #495057;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    }
+
+    textarea.form-control:focus {
+    border-color: #ff5722;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(255, 87, 34, 0.25);
+    }
+
+        .profile-form .form-group {
+            margin-bottom: 20px;
+        }
+
+        .btn-update {
+            background-color: #ff5722;
+            border-color: #ff5722;
+        }
+
+        .btn-update:hover {
+            background-color: #ff7043;
+            border-color: #ff7043;
+        }
+    </style>
+</head>
+<body>
+<!-- Navbar -->
+<div class="navbar-top">
+    <div class="container">
+        <div>
+            <a href="#">Kênh Người Bán</a>
+            <a href="#">Tải ứng dụng</a>
+            <span>Kết nối:</span>
+            <a href="#"><i class="bi bi-facebook"></i></a>
+            <a href="#"><i class="bi bi-instagram"></i></a>
+        </div>
+        <div class="navbar">
+            <a href="#">Thông Báo</a>
+            <a href="#">Hỗ Trợ</a>
+            <a href="#">Tiếng Việt</a>
+
+            <span class="auth-links" th:unless="${user}">
+            <a th:href="@{/register}" id="register">Đăng Ký</a> |
+            <a th:href="@{/login}" id="login">Đăng Nhập</a>
+        </span>
+
+            <div class="dropdown auth-links" th:if="${user}">
+                <a href="#" class="dropdown-toggle" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" th:text="${user.getFullName}">
+                    qunha353
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="userDropdown">
+                    <li><a class="dropdown-item text-dark" th:href="@{/customer/profile}">Tài Khoản Của Tôi</a></li>
+                    <li><a class="dropdown-item text-dark" th:href="@{/customer/orders}">Đơn Mua</a></li>
+                    <li><a class="dropdown-item text-danger" th:href="@{/logout}">Đăng Xuất</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Main Navbar -->
+<div class="navbar-main">
+    <div class="container">
+        <div class="logo">
+            <a th:href="@{/}"> <img src="shopee-logo.png" alt="Shopee Logo"></a>
+        </div>
+        <div class="search-bar">
+            <input type="text" placeholder="Tìm sản phẩm, thương hiệu và tên shop">
+            <button>🔍</button>
+        </div>
+        <div class="cart-icon">
+            <a th:href="@{/customer/cart}">
+                🛒
+            </a>
+            <div class="cart-count"></div>
+        </div>
+    </div>
+</div>
+<!-- Banner Section -->
+
+
+<!-- Profile Container -->
+<div class="container">
+    <div class="profile-container">
+        <div class="profile-header">
+            <form style="display:block;" method="post" enctype="multipart/form-data" th:action=@{/customer/profile/save-image}>
+                <img id="avatarPreview"
+                     th:src="${user.image} != null ? ${user.image} : '/images/users/default-avatar.jpg'"
+                     alt="Ảnh Đại Diện"
+                     class="profile-avatar"
+                     style="max-width: 150px; height: 150px; object-fit: cover; border-radius: 50%;">
+
+                <div style="display:block;">
+                    <input type="file"
+                           id="avatarInput"
+                           name="avatar"
+                           style="display: none;"
+                           accept="image/jpeg,image/png,image/gif"
+                           data-max-size="5242880">
+
+                    <!-- Nút chọn ảnh -->
+                    <button type="button" class="btn-choose" onclick="document.getElementById('avatarInput').click();">
+                        Chọn Ảnh
+                    </button>
+
+                    <!-- Nút Lưu -->
+                    <button type="submit" style="width: 120px;
+    height: 48px;
+    border-radius: 5px;
+    background-color: #FF5722;
+    color: #ffffff;
+    border-color: #FFFFFF;
+    margin-left: 20px;">
+                        Lưu Ảnh
+                    </button>
+                </div>
+            </form>
+
+            <script>
+                const avatarInput = document.getElementById('avatarInput');
+                const avatarPreview = document.getElementById('avatarPreview');
+
+                // Hiển thị ảnh xem trước khi người dùng chọn ảnh
+                avatarInput.addEventListener('change', function () {
+                    const file = this.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function (e) {
+                            avatarPreview.src = e.target.result;
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+            </script>
+
+            <!-- Thông báo lỗi -->
+            <div id="uploadError" style="color: red; margin-top: 10px;"></div>
+        </div>
+
+
+        <div class="profile-info">
+            <h2 th:text="${user.getFullName()}">Tên Người Dùng</h2>
+            <p><strong>Tên Đăng Nhập:</strong> <span th:text="${user.username}">username</span></p>
+        </div>
+
+        <form id="form" th:action=@{/customer/profile/save-information} th:object="${user}" method="post" class="profile-form">
+            <input type="hidden" th:value="${user.userID}" name="userID">
+
+            <div class="row">
+                <div class="col-md-6 form-group">
+                    <label for="fullName" class="form-label">Họ và Tên</label>
+                    <input type="text" class="form-control" id="fullName" name="full_name"
+                           th:value="${user.getFullName()}" required>
+                </div>
+                <div class="col-md-6 form-group">
+                    <label for="username" class="form-label">Tên Đăng Nhập</label>
+                    <input type="text" class="form-control" id="username" name="username" th:value="${user.username}"
+                           readonly>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 form-group">
+                    <label for="email" class="form-label">Địa Chỉ Email</label>
+                    <input type="email" class="form-control" id="email" name="email" th:value="${user.email}" readonly>
+                </div>
+                <div class="col-md-6 form-group">
+                    <label for="phone_number" class="form-label">Số Điện Thoại</label>
+                    <input type="tel" class="form-control" id="phone_number" name="phone_number"
+                           th:value="${user.phoneNumber}" required>
+                </div>
+            </div>
+            <script src="https://esgoo.net/scripts/jquery.js"></script>
+
+            <div style="display:flex; gap:30px ;">
+                <!--                &lt;!&ndash; Tỉnh Thành &ndash;&gt;-->
+                <!--                <select class="address-select" id="tinh" name="tinh" title="Chọn Tỉnh Thành">-->
+                <!--                    <option value="0" th:text="${address != null && address.size() > 0 ? address[0] : 'Tỉnh Thành'}">-->
+                <!--                        Tỉnh Thành-->
+                <!--                    </option>-->
+                <!--                </select>-->
+                <div style="margin-bottom: 10px;">
+                    <label style="margin-bottom:5px;">Tỉnh/Thành Phố</label>
+
+                    <input th:value="${address != null && address.size() > 0 ? address[0] : 'Tỉnh Thành'}"
+                           id="tinh"
+                           name="tinh"
+
+                           required
+                           style="width: 100%; padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 5px;"
+                    >
+                </div>
+                <div style="margin-bottom: 10px;">
+                    <label style="margin-bottom:5px;">Quận/Huyện</label>
+
+                    <input
+                            th:value="${address != null && address.size() > 1 ? address[1] : 'Quận Huyện'}"
+
+                            id="quan"
+                            name="quan"
+                            required
+                            style="width: 100%; padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 5px;"
+                    >
+                </div>
+                <div style="margin-bottom: 10px;">
+                    <label style="margin-bottom:5px;">Phường/Xã</label>
+
+                    <input
+                            id="phuong"
+                            name="phuong"
+                            th:value="${address != null && address.size() > 2 ? address[2] : 'Phường Xã'}"
+                            required
+                            style="width: 100%; padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 5px;"
+                    >
+                </div>
+
+                <!--                &lt;!&ndash; Quận Huyện &ndash;&gt;-->
+                <!--                <select class="address-select" id="quan" name="quan" title="Chọn Quận Huyện">-->
+                <!--                    <option value="0" th:text="${address != null && address.size() > 1 ? address[1] : 'Quận Huyện'}">-->
+                <!--                        Quận Huyện-->
+                <!--                    </option>-->
+                <!--                </select>-->
+
+                <!--                &lt;!&ndash; Phường Xã &ndash;&gt;-->
+                <!--                <select class="address-select" id="phuong" name="phuong" title="Chọn Phường Xã">-->
+                <!--                    <option value="0" th:text="${address != null && address.size() > 2 ? address[2] : 'Phường Xã'}">-->
+                <!--                        Phường Xã-->
+                <!--                    </option>-->
+                <!--                </select>-->
+            </div>
+
+            <div class="form-group">
+                <!-- Địa Chỉ Chi Tiết -->
+                <label for="detailed_address" class="form-label">Địa Chỉ Chi Tiết</label>
+                <textarea class="form-control" id="detailed_address" name="detailed_address" rows="3"
+                          th:text="${address != null && address.size() > 3 ? address[3] : ''}"
+                          placeholder="Nhập địa chỉ cụ thể (ví dụ: số nhà, tên đường)"></textarea>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-update btn-primary w-100">Cập Nhật Thông Tin</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<!-- Link Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

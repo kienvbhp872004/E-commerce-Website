@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navbar Shopee</title>
+    <!-- Link Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .navbar-custom {
+              background-color: #1f1f3d; /* Màu tối cho navbar */
+          }
+          .navbar-custom .navbar-brand,
+          .navbar-custom .nav-link {
+              color: #fff;
+          }
+          .navbar-custom .nav-link:hover {
+              color: #ccc;
+          }
+          .navbar-custom .user-info {
+              color: #fff;
+              margin-right: 15px;
+          }
+          /* Tiêu đề giỏ hàng */
+          .cart-title {
+              color: #ee4d2d;
+              text-align: center;
+              font-size: 36px;
+              font-weight: bold;
+              padding: 20px 0;
+              text-transform: capitalize;
+          }
+  <!--        phần địa chỉ nhận hàng -->
+         .payment-info-container {
+          background-color: #fff;
+           border: 1px solid #ddd;
+          padding: 20px;
+          border-radius: 8px;
+          width: 90%;
+          max-width: 800px;
+          margin: auto;
+          box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+
+      .address-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+      border-bottom: 2px dashed #f15a22;
+      padding-bottom: 10px;
+      }
+
+      .address-icon {
+      color: #ee4d2d;
+      font-size: 24px;
+      margin-right: 8px;
+      }
+
+      .address-title {
+      color: #ee4d2d;
+      font-size: 18px;
+      font-weight: bold;
+      }
+
+
+      .user-info {
+      display: flex;
+      align-items: center;
+      margin-top: 10px;
+      font-size: 16px;
+      }
+
+      .user-info .user-name {
+      font-size: 18px;
+      color: #000;
+      margin-right: 10px;
+      margin-left:10px;
+      }
+
+      .user-info .user-phone {
+      color: #555;
+      }
+
+
+      .address-details {
+      margin: 10px 0;
+      font-size: 14px;
+      color: #333;
+      padding-left:20px;
+      }
+
+
+      .address-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      }
+
+      .default-label {
+      background-color: #fff5f5;
+      color: #ee4d2d;
+      border: 1px solid #ee4d2d;
+      padding: 2px 10px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: bold;
+      margin-left:200px;
+      }
+
+      .change-address {
+      color: #007bff;
+      font-size: 14px;
+      text-decoration: none;
+      cursor: pointer;
+      padding-left:20px;
+      }
+
+      .change-address:hover {
+      text-decoration: underline;
+      }
+
+          /* Phần sản phẩm */
+          .product-container {
+              max-width: 1200px; /* Đồng bộ chiều rộng */
+              margin: 20px auto;
+              background-color: #fff;
+              border-radius: 5px;
+              box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+          }
+
+          .product-row:last-child {
+              border-bottom: none; /* Xóa đường viền cuối */
+          }
+
+          .product-row input[type="checkbox"] {
+              margin-right: 15px;
+          }
+
+          .product-row .column {
+              flex: 1;
+              text-align: left;
+              font-size: 14px;
+              color: #555;
+          }
+                  .shop-container {
+              max-width: 1200px;
+              margin: 20px auto;
+              background-color: white;
+              border-radius: 5px;
+              box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+          }
+
+          /* Header shop */
+          .shop-header {
+              display: flex;
+              align-items: center;
+              padding: 15px 20px;
+              border-bottom: 1px solid #e0e0e0;
+              font-size: 16px;
+          }
+
+          .shop-header img {
+              height: 20px;
+              margin-right: 10px;
+          }
+
+          .shop-header .shop-name {
+              font-weight: bold;
+              color: #555;
+          }
+
+          /* Sản phẩm */
+          .product-row {
+              display: flex;
+              align-items: center;
+              padding: 15px 20px;
+              border-bottom: 1px solid #e0e0e0;
+          }
+
+
+
+          .product-row img {
+              height: 80px;
+              width: 80px;
+              border-radius: 5px;
+              margin-right: 15px;
+          }
+
+          .product-details {
+              flex: 2;
+          }
+
+          .product-details .product-name {
+              font-size: 14px;
+              font-weight: bold;
+              margin-bottom: 5px;
+              color: #333;
+          }
+
+          .product-details .product-category {
+              font-size: 12px;
+              color: #888;
+          }
+
+          .product-price,
+          .product-quantity,
+          .product-total,
+          .product-actions {
+              flex: 1;
+              text-align: center;
+              font-size: 14px;
+          }
+
+          .product-price .old-price {
+              text-decoration: line-through;
+              color: #aaa;
+              display: block;
+          }
+
+          .product-price .new-price {
+              color: #ff5722;
+              font-weight: bold;
+          }
+
+          .product-quantity input {
+              width: 50px;
+              text-align: center;
+              border: 1px solid #ddd;
+              border-radius: 5px;
+          }
+
+          .product-quantity button {
+              background-color: #f5f5f5;
+              border: none;
+              font-size: 16px;
+              padding: 5px 10px;
+              cursor: pointer;
+          }
+
+          .product-actions a {
+              color: #007bff;
+              text-decoration: none;
+          }
+
+          .product-actions a:hover {
+              text-decoration: underline;
+          }
+          .delete-button {
+      background-color: red;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+      }
+
+      .delete-button:hover {
+      background-color: darkred;
+      }
+
+
+          /* Thêm Shop Voucher */
+          .voucher-section {
+              padding: 15px 20px;
+              border-top: 1px solid #e0e0e0;
+              font-size: 14px;
+              color: #ff5722;
+          }
+
+          .voucher-section a {
+              color: #ff5722;
+              text-decoration: none;
+              font-weight: bold;
+          }
+
+          .voucher-section a:hover {
+              text-decoration: underline;
+          }
+
+          /* Khuyến mãi */
+          .promo-section {
+              padding: 15px 20px;
+              background-color: #f9f9f9;
+              font-size: 14px;
+              color: #555;
+          }
+
+          .promo-section .free-ship {
+              color: #28a745;
+              font-weight: bold;
+          }
+          /* Footer Section */
+  .payment-container {
+      background-color: #ffffff;
+      border: 1px solid #e5e5e5;
+      border-radius: 8px;
+      width: 100%;
+      max-width: 1400px;
+      padding: 20px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Payment Method Section */
+  .payment-method-section {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+  }
+
+  .payment-method-title {
+      font-size: 16px;
+      font-weight: bold;
+      color: #333333;
+  }
+
+  .payment-method-details {
+      display: flex;
+      align-items: center;
+      font-size: 14px;
+      color: #555555;
+  }
+
+  .change-payment-method {
+      margin-left: 10px;
+      color: #007bff;
+      text-decoration: none;
+      font-size: 14px;
+  }
+
+  .change-payment-method:hover {
+      text-decoration: underline;
+  }
+
+  /* Payment Summary Section */
+  .payment-summary-section {
+      border-top: 1px solid #e5e5e5;
+      padding-top: 15px;
+      margin-bottom: 20px;
+  }
+
+  .payment-summary-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+  }
+
+  .payment-summary-total {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: bold;
+      color: #f56c6c;
+      padding: 15px 0;
+      border-top: 1px solid #e5e5e5;
+  }
+
+  .summary-label {
+      font-size: 14px;
+      color: #666666;
+  }
+
+  .summary-value {
+      font-size: 14px;
+      color: #333333;
+  }
+
+  .total-value {
+      font-size: 18px;
+  }
+
+  /* Order Button Section */
+  .order-button-section {
+      display: flex; /* Sử dụng Flexbox */
+      align-items: center; /* Canh giữa theo chiều dọc */
+      justify-content: space-between; /* Tạo khoảng cách giữa các phần tử */
+  }
+
+  .place-order-button {
+      background-color: #ff5722;
+      color: #ffffff;
+      font-size: 16px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-right: 10px; /* Khoảng cách giữa nút và văn bản */
+      width:200px;
+  }
+
+  .place-order-button:hover {
+      background-color: #e64a19;
+  }
+
+  .order-terms {
+      font-size: 12px;
+      color: #888888;
+      margin: 0;
+  }
+
+  .terms-link {
+      color: #007bff;
+      text-decoration: none;
+  }
+
+  .terms-link:hover {
+      text-decoration: underline;
+  }
+
+    </style>
+</head>
+<body>
+<!-- Navbar Top -->
+<nav class="navbar navbar-expand-lg navbar-custom">
+    <div class="container-fluid">
+        <a class="navbar-brand" th:href="@{/admin/}">Hust Gaming</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/admin/sellers}">Seller</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/admin/categories}">Categories</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/admin/products}">Products</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/admin/customers}">Customers</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/admin/orders}">Orders</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/admin/shop}">Shops</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/admin/reviews}">Reviews</a>
+                </li>
+            </ul>
+            <span class="navbar-text user-info">
+                    <!-- Hiển thị tên người dùng và vai trò với Thymeleaf -->
+                    Welcome
+                </span>
+            <!-- Dropdown thông tin người dùng -->
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-person"></i> <span >Option</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                        <li><a class="dropdown-item" th:href="@{/admin/profile}">Profile</a></li>
+                        <li><a class="dropdown-item" th:href="@{/logout}">Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Giỏ hàng -->
+<div>
+    <div class="cart-title">Chi tiết đơn hàng</div>
+
+    <!--    thông tin thanh toán -->
+    <div class="product-container">
+        <div class="payment-info-container">
+            <div class="address-header">
+                <span class="address-icon">📍</span>
+                <span class="address-title">Địa Chỉ Nhận Hàng</span>
+            </div>
+            <div class="user-info">
+                <strong class="user-name" th:text="${user.getFullName}"></strong>
+                <strong class="user-phone" th:text="${user.getPhoneNumber}"></strong>
+                <span class="address-details" th:text="${user.address}"> </span>
+            </div>
+        </div>
+    </div>
+    <div class="product-container">
+        <div class="product-row">
+            <div class="column">Sản Phẩm</div>
+            <div class="column" style="padding-left:440px;">Đơn Giá</div>
+            <div class="column" style="padding-left:50px;">Số Lượng</div>
+            <div class="column" style="padding-left:60px;">Số Tiền</div>
+        </div>
+        <div  class="shop-container">
+            <div class="shop-header">
+                <img th:src="@{${shop.image}}" alt="Mall Logo">
+                <div class="shop-name" th:text=${shop.name}>XiaoZhuBangChu</div>
+            </div>
+            <div class="product-row">
+                <img th:src="@{${product.image}}" alt="Sản phẩm">
+                <div class="product-details">
+                    <div class="product-name" th:text="${product.productName}">Xiaozhubangchu Bộ keycap Mario 124 keycap chất lượng cao</div>
+                    <div class="product-category" th:text="'Phân loại hàng:'+${category.categoryName}" >Phân loại hàng: mario</div>
+                </div>
+                <div class="product-price">
+                    <span class="new-price" th:text="${product.price}+'₫'">₫149.000</span>
+                </div>
+                <div class="product-quantity">
+                    <input type="" name="quantity" th:value="${order.quantity}" readonly>
+                </div>
+                <div class="product-total" th:text="${order.totalAmount}+'₫'">
+                    ₫298.000
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    <!--    phan thanh toan -->
+    <div class="product-container">
+        <div class="payment-container">
+            <div class="payment-method-section">
+                <div class="payment-method-title">Phương thức thanh toán</div>
+                <div class="payment-method-details">
+                    <span>Thanh toán khi nhận hàng</span>
+                </div>
+            </div>
+            <div class="payment-summary-section">
+                <div class="payment-summary-item">
+                    <span class="summary-label">Tổng tiền hàng</span>
+                    <span class="summary-value"th:text="'₫'+${order.totalAmount}">₫125.070</span>
+                </div>
+                <div class="payment-summary-item">
+                    <span class="summary-label">Tổng tiền phí vận chuyển</span>
+                    <span class="summary-value">₫0</span>
+                </div>
+                <div class="payment-summary-total">
+                    <span class="summary-label">Tổng thanh toán</span>
+                    <span class="summary-value total-value" style="color:#FF5722;" th:text="'₫'+${order.totalAmount}"></span>
+                </div>
+                <div class="payment-summary-total">
+                    <span class="summary-label">Trạng thái hiện tại</span>
+                    <span class="summary-value total-value" style="color:#FF5722;" th:text="${orderstatus}"></span>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="cart-title">Chuyển trạng thái đơn hàng</div>
+    <div class="product-container">
+        <div class="order-status-buttons text-center mt-4">
+            <form th:action="@{/admin/update-order-status}" method="POST">
+                <input type="hidden" name="orderId" th:value="${order.orderID}"> <!-- Giá trị ID đơn hàng -->
+                <button class="btn btn-warning mx-2" type="submit" name="status" value="2">Chờ lấy hàng</button>
+                <button class="btn btn-info mx-2" type="submit" name="status" value="3">Chờ giao hàng</button>
+                <button class="btn btn-success mx-2" type="submit" name="status" value="5">Đã giao</button>
+                <button class="btn btn-danger mx-2" type="submit" name="status" value="6">Đã hủy</button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
